@@ -7,17 +7,26 @@ long gyroX, gyroY, gyroZ;
 float rotX, rotY, rotZ;
 
 void setup() {
-  Serial.begin(9600);
+  Serial.begin(115200);
   Wire.begin();
   setupMPU();
 }
 
-
+int t = millis();
 void loop() {
+
   recordAccelRegisters();
   recordGyroRegisters();
+  int dt = millis() - t;
+
+  Serial.print(dt); Serial.print("  ");  
+   
+  delay(50);
   printData();
-  delay(100);
+    
+  Serial.println("  ");
+  t = millis();
+  
 }
 
 void setupMPU(){
@@ -73,31 +82,31 @@ void processGyroData() {
 
 void printData() {
   Serial.print("Gyro (deg)");
-  Serial.print("      ");
+  Serial.print("    ");
   
   Serial.print(" X=");
   Serial.print(rotX);
-  Serial.print("         ");
+  Serial.print("      ");
   
   Serial.print(" Y=");
   Serial.print(rotY);
-  Serial.print("         ");
+  Serial.print("     ");
   
   Serial.print(" Z=");
   Serial.print(rotZ);
-  Serial.print("                 ");
+  Serial.print("         ");
   
   Serial.print(" Accel (g)");
-  Serial.print("      ");
+  Serial.print("    ");
   
   Serial.print(" X=");
   Serial.print(gForceX);
-  Serial.print("         ");
+  Serial.print("       ");
   
   Serial.print(" Y=");
   Serial.print(gForceY);
   Serial.print("         ");
   
   Serial.print(" Z=");
-  Serial.println(gForceZ);
+  Serial.print(gForceZ);
 }
